@@ -66,12 +66,16 @@ func (h *httpUsecase) handleResponse(res *http.Response) (*entities.Response, er
 	for s, v := range res.Header {
 		headers[s] = strings.Join(v, ";")
 	}
+	length := res.ContentLength
+	if length < 0 && len(body) > 0 {
+		length = int64(len(body))
+	}
 
 	return &entities.Response{
 		Id:      id,
 		Status:  res.StatusCode,
 		Headers: headers,
-		Length:  res.ContentLength,
+		Length:  length,
 		Body:    body,
 	}, nil
 }

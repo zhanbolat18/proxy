@@ -1,0 +1,17 @@
+GET http://localhost:8080/
+Content-Type: application/json
+
+{
+  "url": "https://google.com",
+  "method": "GET",
+  "headers": {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36 Edg/91.0.864.59"
+  }
+}
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+  client.assert(response.body.status === 200, "Body status is not 200");
+});
+%}
